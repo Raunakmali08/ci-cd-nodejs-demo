@@ -1,4 +1,4 @@
-nano .github/workflows/main.ymlname: CI/CD Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
@@ -27,11 +27,8 @@ jobs:
       run: echo "${{ secrets.DOCKER_dckr_pat_34mosSnPUWvXvc5NrTT1QtEhHwY }}" | docker login -u "${{ secrets.DOCKER_raunakondocker }}" --password-stdin
 
     - name: Build Docker image
-       HEAD
       run: docker build -t ${{ secrets.DOCKER_raunakondocker }}/ci-cd-nodejs-demo:latest .
-
-      run: docker build -t ${{ secrets.raunakondocker }}/ci-cd-nodejs-demo:latest .
-       44fb270 (Fix: updated workflow and secrets configuration)
 
     - name: Push Docker image
       run: docker push ${{ secrets.DOCKER_raunakondocker }}/ci-cd-nodejs-demo:latest
+
