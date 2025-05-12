@@ -29,3 +29,8 @@ jobs:
     - name: Push Docker image
       run: docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-demo:latest
 
+    - name: Debug secret presence (safe)
+      run: |
+        echo "DOCKER_USERNAME is set: ${{ secrets.DOCKER_USERNAME != '' && 'yes' || 'no' }}"
+        echo "DOCKER_PASSWORD is set: ${{ secrets.DOCKER_PASSWORD != '' && 'yes' || 'no' }}"
+
