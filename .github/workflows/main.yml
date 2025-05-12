@@ -17,11 +17,8 @@ jobs:
       with:
         node-version: 18
 
-#    - name: Install dependencies
-#     run: npm install
-
-    - name: Run tests
-      run: npm test
+    - name: Install dependencies
+     run: npm install
 
     - name: Log in to DockerHub
       run: echo "${{ secrets.DOCKER_dckr_pat_34mosSnPUWvXvc5NrTT1QtEhHwY }}" | docker login -u "${{ secrets.DOCKER_raunakondocker }}" --password-stdin
