@@ -18,14 +18,14 @@ jobs:
         node-version: 18
 
     - name: Install dependencies
-     run: npm install
+      run: npm install
 
     - name: Log in to DockerHub
-      run: echo "${{ secrets.DOCKER_dckr_pat_34mosSnPUWvXvc5NrTT1QtEhHwY }}" | docker login -u "${{ secrets.DOCKER_raunakondocker }}" --password-stdin
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKER_raunakondocker }}/ci-cd-nodejs-demo:latest .
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-demo:latest .
 
     - name: Push Docker image
-      run: docker push ${{ secrets.DOCKER_raunakondocker }}/ci-cd-nodejs-demo:latest
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-demo:latest
 
