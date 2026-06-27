@@ -6,35 +6,33 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
-
+    runs-on: [self-hosted, Linux, X64, test-action]
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Verify DockerHub credentials
-      run: |
-        if [ -z "${{ secrets.DOCKER_USERNAME }}" ] || [ -z "${{ secrets.DOCKER_PASSWORD }}" ]; then
-          echo "❌ ERROR: Missing DOCKER_USERNAME or DOCKER_PASSWORD"
-          exit 1
-        else
-          echo "✅ Docker credentials are present"
-        fi
+      - name: Verify DockerHub credentials
+        run: |
+          if [ -z "${{ secrets.DOCKER_USERNAME }}" ] || [ -z "${{ secrets.DOCKER_PASSWORD }}" ]; then
+            echo "❌ ERROR: Missing DOCKER_USERNAME or DOCKER_PASSWORD"
+            exit 1
+          else
+            echo "✅ Docker credentials are present"
+          fi
 
-    - name: Log in to DockerHub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      - name: Log in to DockerHub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-    - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-demo:latest .
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-demo:latest .
 
-    - name: Push Docker image
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-demo:latest
-
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-nodejs-demo:latest
